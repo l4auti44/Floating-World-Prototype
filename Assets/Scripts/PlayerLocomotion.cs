@@ -7,7 +7,7 @@ public class PlayerLocomotion : MonoBehaviour
     Vector3 moveDirection;
     public void HandleMovement()
     {
-        moveDirection = cameraOb
+        //moveDirection = cameraOb
     }
         
 }
