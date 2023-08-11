@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{cf6f75f8-d0cc-4fdd-85e0-e8de9bb99a72}">
+		<property name="assetPath">
+			<value>R's Practice/item_allure.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>14.36734693877551</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{0a260a7c-8b41-472b-9f97-474221ccb2d4}</destination>
+		</relationship>
+	</object>
+</objects>

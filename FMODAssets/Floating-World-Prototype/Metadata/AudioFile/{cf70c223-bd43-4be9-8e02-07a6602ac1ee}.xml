@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{cf70c223-bd43-4be9-8e02-07a6602ac1ee}">
+		<property name="assetPath">
+			<value>R's Practice/wind_ambient.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>11.859591836734694</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{0a260a7c-8b41-472b-9f97-474221ccb2d4}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{a533bffc-c0bb-4ad4-8ed4-436c10755e38}">
+		<property name="assetPath">
+			<value>R's Practice/collect2.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>3.5265306122448981</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{0a260a7c-8b41-472b-9f97-474221ccb2d4}</destination>
+		</relationship>
+	</object>
+</objects>
