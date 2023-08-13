@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using RotaryHeart.Lib.PhysicsExtension;
+using UnityEditor.IMGUI.Controls;
 
 public class PlayerLocomotion : MonoBehaviour
 {
@@ -20,12 +22,14 @@ public class PlayerLocomotion : MonoBehaviour
     public float fallingVelocity;
     public float rayCastHeightOffset = 0.2f;
     public LayerMask groundLayer;
-    
+    public float maxDistance = 1;
+
 
     [Header("Movement Flags")]
     public bool isSprinting;
     public bool isGrounded;
     public bool isJumping;
+    public bool enableDebugThings;
 
     [Header("Movement Speeds")]
     public float walkingSpeed = 1.5f;
@@ -155,23 +159,41 @@ public class PlayerLocomotion : MonoBehaviour
         Vector3 targetPosition;
         targetPosition = transform.position;
 
-        if (!isGrounded && !isJumping)
+        if (!isGrounded)
         {
-            if (!playerManager.isInteracting)
+            if (!playerManager.isInteracting && !isJumping)
             {
                 animatorManager.PlayTargetAnimation("Falling", true);
             }
+
+            inAirTimer += Time.deltaTime;
+            playerRigibody.AddForce(transform.forward * leapingVelocity);
+            playerRigibody.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
         }
 
-        inAirTimer += Time.deltaTime;
-        playerRigibody.AddForce(transform.forward * leapingVelocity);
-        playerRigibody.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
-
-        if (Physics.SphereCast(rayCastOrigin, 0.2f, -Vector3.up, out hit, groundLayer))
+        if (enableDebugThings)
         {
-            if (!isGrounded && !playerManager.isInteracting)
+            RotaryHeart.Lib.PhysicsExtension.DebugExtensions.DebugWireSphere(rayCastOrigin, Color.red, 0.2f, 1, PreviewCondition.Both, true);
+        }
+        
+
+        //detect floor
+        if (UnityEngine.Physics.SphereCast(rayCastOrigin, 0.2f, -Vector3.up, out hit, maxDistance, groundLayer))
+        {
+            if (!isGrounded && playerManager.isInteracting)
             {
-                animatorManager.PlayTargetAnimation("Hard Landing", true);
+
+                if (inAirTimer >= 1f)
+                {
+                    animatorManager.PlayTargetAnimation("Hard Landing", true);
+
+                }
+                else
+                {
+                    animatorManager.PlayTargetAnimation("Land", true);
+
+                }
+
             }
 
             Vector3 rayCastHitPoint = hit.point;
@@ -210,4 +232,6 @@ public class PlayerLocomotion : MonoBehaviour
             playerRigibody.velocity = playerVelocity;
         }
     }
+
+
 }
