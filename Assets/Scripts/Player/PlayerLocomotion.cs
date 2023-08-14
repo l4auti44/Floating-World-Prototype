@@ -14,7 +14,7 @@ public class PlayerLocomotion : MonoBehaviour
 
     Vector3 moveDirection;
     Transform cameraObject;
-    Rigidbody playerRigibody;
+    public Rigidbody playerRigibody;
 
     [Header("Falling")]
     public float inAirTimer;
@@ -165,7 +165,7 @@ public class PlayerLocomotion : MonoBehaviour
             {
                 animatorManager.PlayTargetAnimation("Falling", true);
             }
-
+            animatorManager.animator.SetBool("isUsingRootMotion", false);
             inAirTimer += Time.deltaTime;
             playerRigibody.AddForce(transform.forward * leapingVelocity);
             playerRigibody.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
@@ -193,6 +193,7 @@ public class PlayerLocomotion : MonoBehaviour
                     animatorManager.PlayTargetAnimation("Land", true);
 
                 }
+                
 
             }
 
@@ -233,5 +234,14 @@ public class PlayerLocomotion : MonoBehaviour
         }
     }
 
+    public void HandleDodge()
+    {
+        if (playerManager.isInteracting)
+        {
+            return;
+        }
 
+        animatorManager.PlayTargetAnimation("Dodge", true, true);
+        //TOGLE INVULNERABLE BOOL FOR NO HP DAMAGE DURING ANIMATION
+    }
 }
