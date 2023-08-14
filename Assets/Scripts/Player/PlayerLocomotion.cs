@@ -222,7 +222,7 @@ public class PlayerLocomotion : MonoBehaviour
 
     public void HandleJumping()
     {
-        if (isGrounded)
+        if (isGrounded && !playerManager.isInteracting)
         {
             animatorManager.animator.SetBool("isJumping", true);
             animatorManager.PlayTargetAnimation("Jump", true);
