@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 62e1159814a862449ac9b6684e7af2c9
+guid: 04fed1fb482c3f443b21695a58d81b38
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Dodge
+      name: Climbing
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 49
+      lastFrame: 115
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

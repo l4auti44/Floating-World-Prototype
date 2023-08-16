@@ -20,6 +20,7 @@ public class PlayerLocomotion : MonoBehaviour
     public float inAirTimer;
     public float leapingVelocity;
     public float fallingVelocity;
+    public float airMovementVelocity;
     public float rayCastHeightOffset = 0.2f;
     public LayerMask groundLayer;
     public float maxDistance = 1;
@@ -167,8 +168,17 @@ public class PlayerLocomotion : MonoBehaviour
             }
             animatorManager.animator.SetBool("isUsingRootMotion", false);
             inAirTimer += Time.deltaTime;
+            //LEFT AND RIGHT MOVEMENT
+            moveDirection = cameraObject.right * inputManager.horizontalInput;
+            playerRigibody.AddForce(moveDirection * airMovementVelocity);
+
+            //DOWN AND FOWARD LEAPING
             playerRigibody.AddForce(transform.forward * leapingVelocity);
             playerRigibody.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
+
+            //BACK AND FOWARD
+            moveDirection = cameraObject.forward * inputManager.verticalInput;
+            playerRigibody.AddForce(moveDirection * airMovementVelocity);
         }
 
         if (enableDebugThings)
@@ -178,7 +188,7 @@ public class PlayerLocomotion : MonoBehaviour
         
 
         //detect floor
-        if (UnityEngine.Physics.SphereCast(rayCastOrigin, 0.2f, -Vector3.up, out hit, maxDistance, groundLayer))
+        if (UnityEngine.Physics.SphereCast(rayCastOrigin, 0.15f, -Vector3.up, out hit, maxDistance, groundLayer))
         {
             if (!isGrounded && playerManager.isInteracting)
             {
@@ -193,7 +203,7 @@ public class PlayerLocomotion : MonoBehaviour
                     animatorManager.PlayTargetAnimation("Land", true);
 
                 }
-                
+                playerRigibody.velocity = Vector3.zero;
 
             }
 
