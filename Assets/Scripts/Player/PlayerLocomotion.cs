@@ -210,10 +210,12 @@ public class PlayerLocomotion : MonoBehaviour
             Vector3 rayCastHitPoint = hit.point;
             targetPosition.y = rayCastHitPoint.y;
             inAirTimer = 0;
+            playerRigibody.useGravity = false;
             isGrounded = true;
         }
         else
         {
+            playerRigibody.useGravity = true;
             isGrounded = false;
         }
 
