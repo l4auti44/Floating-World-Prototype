@@ -569,7 +569,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 0}
   collisionLayers:
     serializedVersion: 2
-    m_Bits: 9
+    m_Bits: 73
   cameraCollisionOffset: 0.2
   minimumCollisionOffset: 0.2
   cameraCollisionRadius: 0.2
@@ -713,6 +713,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1524721998, guid: 90f257fe0b549984985981c174fa8955, type: 3}
+      propertyPath: pushingLayers.m_Bits
+      value: 65
+      objectReference: {fileID: 0}
     - target: {fileID: 575598440744586955, guid: 90f257fe0b549984985981c174fa8955,
         type: 3}
       propertyPath: m_RootOrder
@@ -4663,7 +4667,7 @@ PrefabInstance:
     - target: {fileID: 5408819114641208572, guid: 5f764b569bb416a4fa3be491fe98df83,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -10.15
+      value: -45.8
       objectReference: {fileID: 0}
     - target: {fileID: 5408819114641208572, guid: 5f764b569bb416a4fa3be491fe98df83,
         type: 3}

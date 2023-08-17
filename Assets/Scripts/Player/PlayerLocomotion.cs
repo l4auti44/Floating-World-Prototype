@@ -42,6 +42,10 @@ public class PlayerLocomotion : MonoBehaviour
     public float jumpHeight = 3;
     public float gravityIntensity = -15;
 
+    [Header("Pushing")]
+    public LayerMask pushingLayers;
+    public bool isPushing;
+
     //AUDIO
     private EventInstance playerFootsteps;
 
@@ -79,6 +83,11 @@ public class PlayerLocomotion : MonoBehaviour
         moveDirection = moveDirection + cameraObject.right * inputManager.horizontalInput;
         moveDirection.Normalize();
         moveDirection.y = 0;
+
+        HandlePushing();
+
+        if(isPushing)
+            return; 
 
         if (isSprinting)
         {
@@ -123,6 +132,7 @@ public class PlayerLocomotion : MonoBehaviour
             targetDirection = transform.forward;
         }
 
+
         quaternion targetRotation = Quaternion.LookRotation(targetDirection);
         quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
@@ -162,23 +172,18 @@ public class PlayerLocomotion : MonoBehaviour
 
         if (!isGrounded)
         {
+            HandleAirMovement();
+
             if (!playerManager.isInteracting && !isJumping)
             {
                 animatorManager.PlayTargetAnimation("Falling", true);
             }
             animatorManager.animator.SetBool("isUsingRootMotion", false);
             inAirTimer += Time.deltaTime;
-            //LEFT AND RIGHT MOVEMENT
-            moveDirection = cameraObject.right * inputManager.horizontalInput;
-            playerRigibody.AddForce(moveDirection * airMovementVelocity);
-
             //DOWN AND FOWARD LEAPING
             playerRigibody.AddForce(transform.forward * leapingVelocity);
             playerRigibody.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
 
-            //BACK AND FOWARD
-            moveDirection = cameraObject.forward * inputManager.verticalInput;
-            playerRigibody.AddForce(moveDirection * airMovementVelocity);
         }
 
         if (enableDebugThings)
@@ -255,5 +260,47 @@ public class PlayerLocomotion : MonoBehaviour
 
         animatorManager.PlayTargetAnimation("Dodge", true, true);
         //TOGLE INVULNERABLE BOOL FOR NO HP DAMAGE DURING ANIMATION
+    }
+
+    private void HandleAirMovement()
+    {
+
+        //LEFT AND RIGHT MOVEMENT
+        moveDirection = cameraObject.right * inputManager.horizontalInput;
+        playerRigibody.AddForce(moveDirection * airMovementVelocity);
+        
+
+        //BACK AND FOWARD
+        moveDirection = cameraObject.forward * inputManager.verticalInput;
+        playerRigibody.AddForce(moveDirection * airMovementVelocity);
+    }
+
+    private void HandlePushing()
+    {
+        //if detect an object in front of player, start pushing
+        Vector3 rayCastPos = transform.position;
+        rayCastPos.y += 1.3f;
+
+        if (enableDebugThings)
+        {
+            Debug.DrawLine(rayCastPos, rayCastPos + (transform.forward * 0.3f), Color.red);
+        }
+        
+        if (moveDirection != Vector3.zero && UnityEngine.Physics.Raycast(rayCastPos, transform.forward, 0.3f, pushingLayers))
+        {
+            if(!isPushing)
+            {
+                animatorManager.animator.SetBool("isPushing", true);
+                animatorManager.PlayTargetAnimation("Pushing", false);
+                isPushing = true;
+            }    
+
+        }
+        else
+        {
+            animatorManager.animator.SetBool("isPushing", false);
+            isPushing = false;
+        }
+        
     }
 }
